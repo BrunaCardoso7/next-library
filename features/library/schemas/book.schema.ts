@@ -23,11 +23,15 @@ export const booksSchema = z.object({
 
   nr_followup_count: z.coerce
     .number()
-    .min(0, 'Follow-up deve ser positivo'),
+    .min(0, 'Follow-up deve ser positivo')
+    .optional()
+    .default(0),
 
   nr_followdown_count: z.coerce
     .number()
-    .min(0, 'Follow-down deve ser positivo'),
+    .min(0, 'Follow-down deve ser positivo')
+    .optional()
+    .default(0),
 
   dt_criado: z.date().optional(),
 

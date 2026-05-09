@@ -2,12 +2,23 @@
 interface GetBooksParams {
   page?: number
   limit?: number
+  id_onboarding_user?: number
 }
 
-async function getBooks({ page = 1, limit = 10 }: GetBooksParams = {}) {
+async function getBooks({ page = 1, limit = 10, id_onboarding_user }: GetBooksParams = {}) {
   const skip = (page - 1) * limit
   
-  const res = await fetch(`/api/book?page=${page}&limit=${limit}&skip=${skip}`, {
+  const queryParams = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    skip: skip.toString(),
+  })
+
+  if (id_onboarding_user) {
+    queryParams.append('id_onboarding_user', id_onboarding_user.toString())
+  }
+  
+  const res = await fetch(`/api/book/with-reactions?${queryParams}`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })

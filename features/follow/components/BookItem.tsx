@@ -11,41 +11,22 @@ import {
 import { Book } from "../types/library.types"
 import { BookActions } from "./BookActions"
 
-type BookItemProps = Book & {
-  id_onboarding_user: number
-}
-
-export function BookItem({
-  id,
-  nm_title,
-  nm_author,
-  user_reaction,
-  nr_followup_count,
-  nr_followdown_count,
-  id_onboarding_user,
-}: BookItemProps) {
+export function BookItem({ nm_title, nm_author }: Book) {
 
   return (
-    <Item className="bg-white rounded-md p-4">
+    <Item className="bg-white rounded-md p-4" >
       <Avatar>
         <AvatarImage src="https://github.com/shadcn.png" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
-      <ItemMedia variant="icon"></ItemMedia>
+      <ItemMedia variant="icon">
+      </ItemMedia>
       <ItemContent>
         <ItemTitle>{nm_title}</ItemTitle>
         <ItemDescription>{nm_author}</ItemDescription>
       </ItemContent>
       <ItemActions>
-        {id && (
-          <BookActions
-            id_book={Number(id)}
-            id_onboarding_user={id_onboarding_user}
-            user_reaction={user_reaction}
-            nr_followup_count={nr_followup_count}
-            nr_followdown_count={nr_followdown_count}
-          />
-        )}
+        <BookActions />
       </ItemActions>
     </Item>
   )

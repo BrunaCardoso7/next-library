@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
         where: { nm_title: nm_title },
         skip,
         take: limit,
+        order: { dt_criado: 'DESC' }
     })
     books = result[0]
     total = result[1]
@@ -29,6 +30,7 @@ export async function GET(req: NextRequest) {
     const result = await repo.findAndCount({
       skip,
       take: limit,
+      order: { dt_criado: 'DESC' }
     })
     books = result[0]
     total = result[1]
@@ -43,6 +45,7 @@ export async function GET(req: NextRequest) {
         where: { nm_user_cri: nm_user_cri },
         skip,
         take: limit,
+        order: { dt_criado: 'DESC' }
     })
     books = result[0]
     total = result[1]
@@ -50,6 +53,7 @@ export async function GET(req: NextRequest) {
     const result = await repo.findAndCount({
       skip,
       take: limit,
+      order: { dt_criado: 'DESC' }
     })
     books = result[0]
     total = result[1]

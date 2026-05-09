@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
+import { useQueryClient } from "@tanstack/react-query"
 
 export function useFormBook() {
   const router = useRouter()
+  const queryClient = useQueryClient()
   const { data, setData } = useOnboardingContext()
   const mutation = useCreateBookMutation()
 
@@ -20,7 +22,6 @@ export function useFormBook() {
       nm_title: '',
       nm_author: '',
       dt_published_year: new Date().getFullYear(),
-      nr_followup: 0,
       nm_user_cri: cpf,
     },
   })
@@ -41,6 +42,10 @@ export function useFormBook() {
                 ie_role: 'writer',
             })
 
+            queryClient.invalidateQueries({
+              queryKey: ['books'],
+            })
+
             router.push('/library')
             },
 
@@ -50,7 +55,7 @@ export function useFormBook() {
                 ? error.message
                 : 'Erro ao criar livro'
             )
-            },
+          },
         }
     )
   }

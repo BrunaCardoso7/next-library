@@ -1,57 +1,87 @@
 'use client'
-import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Flame, WavesVertical } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { useBookReaction } from '@/features/follow/hooks/useBookReaction'
+import { ReactionType } from '../types/library.types'
 
+type BookActionsProps = {
+  id_book: number
+  id_onboarding_user: number
+  user_reaction?: ReactionType
+  nr_followup_count: number
+  nr_followdown_count: number
+}
 
-export function BookActions() {
-  const [isLiked, setIsLiked] = useState(false)
-  const [isDisliked, setIsDisliked] = useState(false)
+export function BookActions({
+  id_book,
+  id_onboarding_user,
+  user_reaction,
+  nr_followup_count,
+  nr_followdown_count,
+}: BookActionsProps) {
+  const { handleReaction, isLoading } = useBookReaction({
+    id_book,
+    id_onboarding_user,
+    currentReaction: user_reaction,
+  })
+
+  const isUpActive = user_reaction === 'UP'
+  const isDownActive = user_reaction === 'DOWN'
 
   const handleLike = () => {
-    setIsLiked(!isLiked)
-    if (isDisliked) setIsDisliked(false)
+    handleReaction('UP')
   }
 
   const handleDislike = () => {
-    setIsDisliked(!isDisliked)
-    if (isLiked) setIsLiked(false)
+    handleReaction('DOWN')
   }
 
   return (
-    <div className="flex gap-2">
-      <Tooltip>
-        <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleLike}
-            className={isLiked ? "bg-red-100 text-red-600 hover:bg-red-200" : ""}
-          >
-            <Flame />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Foguinho na postagem</p>
-        </TooltipContent>
-      </Tooltip>
+    <div className="flex gap-2 items-center">
+      <div className="flex items-center gap-1">
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleLike}
+              disabled={isLoading}
+              className={isUpActive ? "bg-red-100 text-red-600 hover:bg-red-200" : ""}
+            >
+              <Flame />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{isUpActive ? 'Remover foguinho' : 'Foguinho na postagem'}</p>
+          </TooltipContent>
+        </Tooltip>
+        <span className="text-sm font-medium text-gray-600 min-w-6">
+          {nr_followup_count}
+        </span>
+      </div>
 
-      <Tooltip>
-        <TooltipTrigger>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleDislike}
-            className={isDisliked ? "bg-slate-200 text-slate-600 hover:bg-slate-300" : ""}
-          >
-            <WavesVertical />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Apagar foguinho da postagem</p>
-        </TooltipContent>
-      </Tooltip>
+      <div className="flex items-center gap-1">
+        <Tooltip>
+          <TooltipTrigger>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleDislike}
+              disabled={isLoading}
+              className={isDownActive ? "bg-slate-200 text-slate-600 hover:bg-slate-300" : ""}
+            >
+              <WavesVertical />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{isDownActive ? 'Remover reação' : 'Apagar foguinho da postagem'}</p>
+          </TooltipContent>
+        </Tooltip>
+        <span className="text-sm font-medium text-gray-600 min-w-6">
+          {nr_followdown_count}
+        </span>
+      </div>
     </div>
   )
 }

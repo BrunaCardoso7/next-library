@@ -3,10 +3,18 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import getBooks from '../services/getBooks'
 
-export function useBooksQuery() {
+type UseBooksQueryProps = {
+  id_onboarding_user?: number
+}
+
+export function useBooksQuery({ id_onboarding_user }: UseBooksQueryProps = {}) {
   return useInfiniteQuery({
-    queryKey: ['books'],
-    queryFn: ({ pageParam = 1 }) => getBooks({ page: pageParam, limit: 10 }),
+    queryKey: ['books', id_onboarding_user],
+    queryFn: ({ pageParam = 1 }) => getBooks({ 
+      page: pageParam, 
+      limit: 10,
+      id_onboarding_user,
+    }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       if (lastPage.pagination.page < lastPage.pagination.totalPages) {

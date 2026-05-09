@@ -1,5 +1,3 @@
-export type ReactionType = 'UP' | 'DOWN' | null
-
 export interface Book {
   id?: string
   nm_title: string
@@ -9,5 +7,4 @@ export interface Book {
   dt_criado?: Date
   nr_followup_count: number
   nm_user_cri?: string
-  user_reaction?: ReactionType
 }

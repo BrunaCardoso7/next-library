@@ -1,4 +1,5 @@
 import { Book } from '@/entities/Book'
+import { Follow } from '@/entities/Follow'
 import { Onboarding } from '@/entities/Onboarding'
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
@@ -12,5 +13,5 @@ export const AppDataSource = new DataSource({
   database: 'juridiq',
   synchronize: true,
   logging: true,
-  entities: [Onboarding, Book],
+  entities: [Onboarding, Book, Follow],
 })
