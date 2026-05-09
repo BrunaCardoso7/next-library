@@ -1,0 +1,19 @@
+'use client'
+
+import { useInfiniteQuery } from '@tanstack/react-query'
+import getBooks from '../services/getBooks'
+
+export function useBooksQuery() {
+  return useInfiniteQuery({
+    queryKey: ['books'],
+    queryFn: ({ pageParam = 1 }) => getBooks({ page: pageParam, limit: 10 }),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.pagination.page < lastPage.pagination.totalPages) {
+        return lastPage.pagination.page + 1
+      }
+      return undefined
+    },
+    staleTime: 1000 * 60 * 5,
+  })
+}

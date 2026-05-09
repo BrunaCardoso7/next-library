@@ -6,9 +6,9 @@ export default function LibraryLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="h-screen w-screen flex flex-col">
+    <div className="h-screen w-full flex flex-col overflow-hidden">
       <Header />
-      <main className="flex flex-col flex-1 bg-blue-50 ">{children}</main>
+      <main className="flex flex-col flex-1 bg-blue-50 overflow-y-auto">{children}</main>
     </div>  
   )
 }

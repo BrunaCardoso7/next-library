@@ -26,7 +26,6 @@ export function useOnboarding() {
 
   const mutation = useMutation({
     mutationFn: async (formData: OnboardingFormValues) => {
-      // Se tem userId, é uma atualização
       if (userId) {
         const res = await fetch(`/api/user/${userId}`, {
           method: 'PUT',
@@ -36,7 +35,6 @@ export function useOnboarding() {
         if (!res.ok) throw new Error('Erro ao atualizar')
         return res.json()
       } else {
-        // Senão, é criação
         const res = await fetch('/api/user', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -49,6 +47,7 @@ export function useOnboarding() {
     onSuccess: (response) => {
       setData({
         nm_user: response.data?.nm_user || form.getValues('nm_user'),
+        nr_cpf: response.data?.nr_cpf || form.getValues('nr_cpf'),
         ie_role: response.data?.ie_role || form.getValues('ie_role'),
       })
       router.push('/library')
@@ -63,6 +62,7 @@ export function useOnboarding() {
     form.setValue('ie_role', role)
     setData({ 
       nm_user: data.nm_user || form.getValues('nm_user'),
+      nr_cpf: data.nr_cpf || form.getValues('nr_cpf'),
       ie_role: role
     })
   }

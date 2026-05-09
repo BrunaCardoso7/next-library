@@ -1,5 +1,5 @@
 import { FieldLabel } from "@/components/ui/field"
-import { FieldError } from "../../../components/shared/fielderror"
+import { FieldError } from "./fielderror"
 
 export function FormField({
   label,
@@ -11,7 +11,7 @@ export function FormField({
   children: React.ReactNode
 }) {
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 w-full">
       <FieldLabel>{label}</FieldLabel>
       {children}
       <FieldError message={error} />

@@ -1,6 +1,6 @@
 "use client"
 
-import { DoorOpen, User } from 'lucide-react';
+import { BookPlus, DoorOpen, User } from 'lucide-react';
 import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import { Logo } from "./logo";
@@ -35,9 +35,15 @@ export default function Header() {
         alt="Juridiq Livraria Logo"
         className="shrink-0 h-1/3"
       />
-        
       <div className='flex flex-row items-center gap-4'>
-        
+        {
+          data?.ie_role === "writer" && (
+            <Button size="sm" variant="outline" onClick={() => router.push('/library/book')}>
+            <BookPlus />
+              Publicar
+            </Button>
+        )
+        }
         <div className="flex items-center gap-2 bg-gray-200 px-4 py-1 rounded-3xl">
             <User className="w-4 h-4" />
             <span>{selectedRoleLabel ?? ""}</span>

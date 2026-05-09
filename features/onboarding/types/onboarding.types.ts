@@ -6,7 +6,7 @@ export type UserRole = 'visitor' | 'writer'
 export type OnboardingFormValues = z.infer<typeof onboardingSchema> & {
   nr_cpf: string
 }
- 
+
 export interface User {
   nm_user: string
   nr_cpf?: string

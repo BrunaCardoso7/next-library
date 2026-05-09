@@ -16,7 +16,7 @@ export function Logo({
   ...props
 }: LogoProps) {
   return (
-    <div className="flex items-center gap-1 flex-row pb-4">
+    <div className="flex items-center gap-1 flex-row">
 
       <Image
         src={src}

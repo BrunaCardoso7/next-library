@@ -1,4 +1,3 @@
-// app/api/users/route.ts
 import { onboardingSchema } from '@/features/onboarding/schemas/onboarding.schema'
 import { Onboarding } from '@/entities/Onboarding'
 import { connectDB } from '@/lib/db'
@@ -6,30 +5,28 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
   const cpf = req.nextUrl.searchParams.get('cpf')
-
-  if (!cpf) {
-    return NextResponse.json(
-      { message: 'CPF não fornecido' },
-      { status: 400 }
-    )
-  }
-
   const db = await connectDB()
   const repo = db.getRepository(Onboarding)
 
-  const user = await repo.findOne({
-    where: { nr_cpf: cpf },
-  })
-
-  if (!user) {
-    return NextResponse.json(
-      { message: 'Usuário não encontrado', user: null },
-      { status: 404 }
-    )
+  if (cpf) {
+    const user = await repo.findOne({
+      where: { nr_cpf: cpf },
+    })
+      
+    if (!user) {
+      return NextResponse.json(
+        { message: 'Usuário não encontrado', user: null },
+        { status: 404 }
+      )
+    }
+    return NextResponse.json(user)
   }
 
-  return NextResponse.json(user)
-}
+  const users = await repo.find()
+  return NextResponse.json(users)
+} 
+
+
 
 export async function POST(req: NextRequest) {
   const body = await req.json()

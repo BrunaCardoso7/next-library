@@ -9,11 +9,9 @@ import {
   ItemMedia,
   ItemTitle,
 } from "@/components/ui/item"
+import { Book } from "../types/library.types"
 
-export function BookItem({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function BookItem({ nm_title, nm_author }: Book) {
 
   return (
     <Item className="bg-white rounded-md p-4" >
@@ -24,8 +22,8 @@ export function BookItem({
       <ItemMedia variant="icon">
       </ItemMedia>
       <ItemContent>
-        <ItemTitle>Title</ItemTitle>
-        <ItemDescription>Description</ItemDescription>
+        <ItemTitle>{nm_title}</ItemTitle>
+        <ItemDescription>{nm_author}</ItemDescription>
       </ItemContent>
       <ItemActions>
         <Button>Action</Button>

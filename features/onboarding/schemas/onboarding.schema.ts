@@ -6,7 +6,7 @@ export const onboardingSchema = z.object({
   nm_user: z
     .string()
     .min(2, 'Nome deve ter ao menos 2 caracteres')
-    .max(50, 'Nome muito longo')
+    .max(22, 'Nome muito longo')
     .trim(),
   nr_cpf: z.string().min(1, "CPF obrigatório"),
   ie_role: z.enum(roles, {
