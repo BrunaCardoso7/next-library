@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["vitest/globals"],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "target": "ES2017",

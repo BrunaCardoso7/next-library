@@ -30,18 +30,12 @@ export default function Header() {
 
   return (
     <header className="p-4 border-b items-center justify-between w-full flex px-24">
-      <div className="flex items-center  gap-1 flex-row">
-        <Logo
-          src="/logo/juridiq_logo.webp"
-          alt="Juridiq Livraria Logo"
-          className="shrink-0 h-1/3"
-        />
-        <span>|</span>
-        <div className="text-md">
-          <p className="text-xs text-muted-foreground">Livraria</p>
-        </div>
-      </div>
-
+      <Logo
+        src="/logo/juridiq_logo.webp"
+        alt="Juridiq Livraria Logo"
+        className="shrink-0 h-1/3"
+      />
+        
       <div className='flex flex-row items-center gap-4'>
         
         <div className="flex items-center gap-2 bg-gray-200 px-4 py-1 rounded-3xl">

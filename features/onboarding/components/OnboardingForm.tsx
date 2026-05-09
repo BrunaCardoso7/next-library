@@ -87,7 +87,6 @@ export function OnboardingForm({
                         disabled={isLookingUp}
                       />
                       {isLookingUp && <p className="text-xs text-blue-600 mt-1">Buscando...</p>}
-                      <FieldError message={errors.nr_cpf?.message} />
                     </>
                   )}
                 />
@@ -102,7 +101,6 @@ export function OnboardingForm({
                         {...field}
                         placeholder="Digite aqui..."
                       />
-                      <FieldError message={errors.nm_user?.message} />
                     </>
                   )}
                 />
