@@ -1,8 +1,8 @@
 'use client'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { useToggleFollowMutation } from './useToogleFollowMutation'
 import { useRemoveFollowMutation } from './useRemoveFollowMutation'
+import { useCreateFollowMutation } from './useCreateFollowMutation'
 
 type ReactionType = 'UP' | 'DOWN'
 
@@ -18,7 +18,7 @@ export function useBookReaction({
   currentReaction,
 }: BookReactionParams) {
   const queryClient = useQueryClient()
-  const toggleMutation = useToggleFollowMutation()
+  const toggleMutation = useCreateFollowMutation()
   const removeMutation = useRemoveFollowMutation()
 
   async function handleReaction(type: ReactionType) {

@@ -1,4 +1,4 @@
-export async function toggleFollow(
+export async function createFollow(
   payload: {
     id_book: number
     id_onboarding_user: number

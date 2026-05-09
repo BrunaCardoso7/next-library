@@ -17,29 +17,24 @@ export function OnboardingProvider({
   children: React.ReactNode
 }) {
   const [data, setDataState] = useState<Partial<User>>({})
-
   useEffect(() => {
     const saved = localStorage.getItem('onboarding')
     if (saved) {
       setDataState(JSON.parse(saved))
     }
   }, [])
-
   const setData = (newData: Partial<User>) => {
     const updated = {
       ...data,
       ...newData,
     }
-
     setDataState(updated)
     localStorage.setItem('onboarding', JSON.stringify(updated))
   }
-
   const clear = () => {
     setDataState({})
     localStorage.removeItem('onboarding')
   }
-
   return (
     <OnboardingContext.Provider value={{ data, setData, clear }}>
       {children}

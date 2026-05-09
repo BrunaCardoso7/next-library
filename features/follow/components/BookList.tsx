@@ -4,7 +4,7 @@ import { useEffect, useRef, useCallback } from "react"
 import { BookItem } from "./BookItem"
 import { Book } from "../types/library.types"
 import Load from "@/components/shared/load"
-import { useInfiniteScroll } from "../hooks/useInfinityScroll"
+import { useInfiniteScroll } from "@/features/library/hooks/useInfinityScroll"
 
 type BookListProps = {
   data?: { books: Book[] } | Book[] | undefined

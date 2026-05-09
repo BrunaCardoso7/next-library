@@ -36,7 +36,6 @@ export function BookReactions({
   return (
     <div className="flex items-center gap-2">
       <div className="flex gap-1">
-        {/* Botão UP */}
         <Tooltip>
           <TooltipTrigger>
             <Button
@@ -58,14 +57,12 @@ export function BookReactions({
           </TooltipContent>
         </Tooltip>
 
-        {/* Contador UP */}
         <span className="text-sm font-medium text-gray-600 min-w-6 text-center">
           {nr_followup_count}
         </span>
       </div>
 
       <div className="flex gap-1">
-        {/* Botão DOWN */}
         <Tooltip>
           <TooltipTrigger>
             <Button
@@ -87,7 +84,6 @@ export function BookReactions({
           </TooltipContent>
         </Tooltip>
 
-        {/* Contador DOWN */}
         <span className="text-sm font-medium text-gray-600 min-w-6 text-center">
           {nr_followdown_count}
         </span>

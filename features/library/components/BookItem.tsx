@@ -28,7 +28,6 @@ export function BookItem({
   nr_followdown_count,
   id_onboarding_user,
 }: BookItemProps) {
-
   return (
     <Item className="bg-white rounded-md p-4">
       <Avatar>

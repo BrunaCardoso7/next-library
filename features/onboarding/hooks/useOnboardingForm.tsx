@@ -9,6 +9,7 @@ import { OnboardingFormValues } from '../types/onboarding.types'
 import { useOnboardingContext } from '../providers/onboarding-provider'
 import { useCreateOnboardingMutation } from './useCreateOnboardingMutation'
 import { useUpdateOnboardingMutation } from './useUpdateOnboarding'
+import { toast } from 'sonner'
 
 export function useOnboardingForm() {
   const router = useRouter()
@@ -35,6 +36,7 @@ export function useOnboardingForm() {
     })
     router.push('/library')
   }
+
   const createMutation = useCreateOnboardingMutation()
   const updateMutation = useUpdateOnboardingMutation()
 
@@ -46,21 +48,19 @@ export function useOnboardingForm() {
       nr_cpf: values.nr_cpf,
       ie_role: values.ie_role,
     }
-
     if (user_id) {
       updateMutation.mutate(
         { user_id, data: payload },
-        { onSuccess: handleSuccess }
+        { onSuccess: handleSuccess },
       )
       return
     }
-
     clear()
-
     createMutation.mutate(payload, {
       onSuccess: handleSuccess,
     })
   }
+  
 
   const isLoading = createMutation.isPending || updateMutation.isPending
   const isError = createMutation.isError || updateMutation.isError

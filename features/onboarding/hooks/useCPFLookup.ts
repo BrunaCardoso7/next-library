@@ -3,6 +3,7 @@
 import { useCallback, useState } from 'react'
 import { UseFormSetValue } from 'react-hook-form'
 import { useOnboardingContext } from '../providers/onboarding-provider'
+import { toast } from 'sonner'
 
 export interface UserFound {
   id: number
@@ -23,33 +24,27 @@ export function useCPFLookup(
       setError(null)
       return
     }
-
     setIsLoading(true)
     setError(null)
 
     try {
       const response = await fetch(`/api/user?cpf=${encodeURIComponent(cpf)}`)
-      
       if (response.ok) {
         const user: UserFound = await response.json()
-        console.log('Usuário encontrado:', user)
-
-        if (user) {
-          setData(user)
-        }
+        if (user) { setData(user) }
         setValue('nm_user', user.nm_user)
         setValue('ie_role', user.ie_role)
         onUserFound(user.id)
         setError(null)
-      } else {
-        console.log('Usuário não encontrado')
+      } else {  
         setValue('nm_user', '')
         onUserFound(0) 
         setError(null)
+        toast.error('Usuário não encontrado')
       }
     } catch (err) {
       setError('Erro ao buscar CPF')
-      console.error(err)
+      toast.error('Erro ao buscar CPF')
     } finally {
       setIsLoading(false)
     }

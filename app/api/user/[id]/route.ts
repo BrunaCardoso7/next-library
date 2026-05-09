@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { NextRequest, NextResponse } from 'next/server'
 import { connectDB } from '@/lib/db'
 import { Onboarding } from '@/entities/Onboarding'

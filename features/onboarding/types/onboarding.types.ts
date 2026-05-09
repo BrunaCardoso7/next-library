@@ -14,8 +14,7 @@ export interface User {
   ie_role: UserRole
 }
  
-// Aberto pra extensão (SOLID - OCP): adicionar novo papel não requer
-// alterar o OnboardingForm, apenas adicionar aqui
+
 export interface RoleOption {
   value: UserRole
   label: string

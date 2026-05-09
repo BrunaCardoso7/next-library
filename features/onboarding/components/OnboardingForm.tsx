@@ -19,7 +19,6 @@ import { useCPFLookup } from "../hooks/useCPFLookup"
 import { Controller } from "react-hook-form"
 import { TabsTrigger, Tabs, TabsList } from "@/components/ui/tabs"
 import { Logo } from "@/components/shared/logo"
-import { FieldError } from "../../../components/shared/fielderror"
 import { Separator } from "@/components/ui/separator"
 import { useCpfAutoLookup } from "../hooks/useCPFAutoLookup"
 import { FormField } from "./FormFields"
@@ -31,10 +30,7 @@ export function OnboardingForm({
 
   const { form, onSubmit, isLoading,  setUserId } = useOnboarding()
   const { errors } = form.formState
-  const { lookupByCPF, isLoading: isLookingUp } = useCPFLookup(
-    form.setValue,
-    setUserId
-  )
+  const { lookupByCPF, isLoading: isLookingUp } = useCPFLookup(form.setValue, setUserId)
   const cpf = form.watch('nr_cpf')
   useCpfAutoLookup(cpf, lookupByCPF)
 

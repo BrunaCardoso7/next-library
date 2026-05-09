@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { onboardingSchema } from '@/features/onboarding/schemas/onboarding.schema'
 import { Onboarding } from '@/entities/Onboarding'
 import { connectDB } from '@/lib/db'
