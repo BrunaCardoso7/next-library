@@ -43,9 +43,9 @@ export function OnboardingForm({
       <Card className="rounded-4xl">
         <CardHeader className="text-center flex flex-col items-center py-4">
           <Logo
-            src="/logo/juridiq_logo.webp"
+            src="/logo_projeto.png"
             alt="Juridiq Livraria Logo"
-            className="shrink-0 h-1/3"
+            className="shrink-0 h-1/5"
           />
           <CardTitle className="text-xl">
             Visitando ou escrevendo?

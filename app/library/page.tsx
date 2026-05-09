@@ -23,13 +23,13 @@ export default function LibraryPage() {
     ie_role: role,
   })
 
-  const { books: searchResults } = useSearchBooks(searchTerm, id_onboarding_user)
+  const { books: searchResults } = useSearchBooks(searchTerm, id_onboarding_user, role)
 
   const isSearching = searchTerm.trim().length > 0
   const allBooks = isSearching ? searchResults : (allBooksData?.pages?.flatMap((page: any) => page.books) ?? [])
 
   return (
-    <div className="min-h-screen flex flex-1 w-full flex-col mx-auto items-center mt-8 justify-start bg-blue-50 font-sans dark:bg-black text-zinc-800 dark:text-zinc-200">
+    <div className="min-h-screen flex flex-1 w-full flex-col mx-auto items-center mt-8 justify-start font-sans dark:bg-black text-zinc-800 dark:text-zinc-200">
         <div className="w-full max-w-4xl flex flex-col item-start justify-start gap-8">
           <h1 className="text-2xl text-start text-zinc-700 font-bold ">Recomendações de Livros</h1>
             <SearchInput 

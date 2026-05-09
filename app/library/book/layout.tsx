@@ -7,7 +7,7 @@ export default function LibraryLayout({
 }) {
   return (
     <div className="h-screen w-screen flex flex-col">
-      <main className="flex flex-col flex-1 bg-blue-50 ">{children}</main>
+      <main className="flex flex-col flex-1 ">{children}</main>
     </div>  
   )
 }

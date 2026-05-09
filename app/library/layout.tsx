@@ -8,7 +8,7 @@ export default function LibraryLayout({
   return (
     <div className="h-screen w-full flex flex-col overflow-hidden">
       <Header />
-      <main className="flex flex-col flex-1 bg-blue-50 overflow-y-auto">{children}</main>
+      <main className="flex flex-col flex-1 overflow-y-auto">{children}</main>
     </div>  
   )
 }

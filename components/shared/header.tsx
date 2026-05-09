@@ -29,9 +29,9 @@ export default function Header() {
 
 
   return (
-    <header className="p-4 border-b items-center justify-between w-full flex px-24">
+    <header className="p-4 border-b items-center bg-white justify-between w-full flex px-24">
       <Logo
-        src="/logo/juridiq_logo.webp"
+        src="/logo_projeto.png"
         alt="Juridiq Livraria Logo"
         className="shrink-0 h-1/3"
       />

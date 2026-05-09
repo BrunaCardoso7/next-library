@@ -17,12 +17,13 @@ type Book = {
 
 export function useSearchBooks(
   searchTerm: string,
-  id_onboarding_user?: number
+  id_onboarding_user?: number,
+  ie_role?: string
 ) {
   const queryClient = useQueryClient()
 
   const filteredBooks = useMemo(() => {
-    const cachedData = queryClient.getQueryData(['books', id_onboarding_user]) as any
+    const cachedData = queryClient.getQueryData(['books', id_onboarding_user, ie_role]) as any
 
     if (!cachedData?.pages) return []
 
@@ -33,7 +34,7 @@ export function useSearchBooks(
     return allBooks.filter(book =>
       book.nm_title.toLowerCase().includes(searchTerm.toLowerCase())
     )
-  }, [searchTerm, queryClient, id_onboarding_user])
+  }, [searchTerm, queryClient, id_onboarding_user, ie_role])
 
   return {
     books: filteredBooks,

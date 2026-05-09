@@ -4,12 +4,14 @@ import { useState } from 'react'
 import { useOnboardingForm } from './useOnboardingForm'
 
 export function useOnboarding() {
-  const { form, onSubmit, isLoading, isError } = useOnboardingForm()
+  const [userId, setUserId] = useState<number | null>(null)
+
+  const { form, onSubmit } = useOnboardingForm()
 
   return {
     form,
     onSubmit,
-    isLoading,
-    isError,
+    userId,
+    setUserId,
   }
 }
