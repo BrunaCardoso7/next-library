@@ -15,6 +15,18 @@ type Book = {
   user_reaction?: 'UP' | 'DOWN' | null
 }
 
+export function filterBooksFromCache(cachedData: any, searchTerm: string) {
+  if (!cachedData?.pages) return []
+
+  const allBooks = cachedData.pages.flatMap((page: any) => page.books) as Book[]
+
+  if (!searchTerm.trim()) return allBooks
+
+  return allBooks.filter(book =>
+    book.nm_title.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+}
+
 export function useSearchBooks(
   searchTerm: string,
   id_onboarding_user?: number,
@@ -25,15 +37,7 @@ export function useSearchBooks(
   const filteredBooks = useMemo(() => {
     const cachedData = queryClient.getQueryData(['books', id_onboarding_user, ie_role]) as any
 
-    if (!cachedData?.pages) return []
-
-    const allBooks = cachedData.pages.flatMap((page: any) => page.books) as Book[]
-
-    if (!searchTerm.trim()) return allBooks
-
-    return allBooks.filter(book =>
-      book.nm_title.toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    return filterBooksFromCache(cachedData, searchTerm)
   }, [searchTerm, queryClient, id_onboarding_user, ie_role])
 
   return {

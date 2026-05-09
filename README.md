@@ -133,6 +133,20 @@ Relações principais:
 
 ---
 
+## ✅ Testes
+
+Foram implementados testes nas entidades principais do sistema para garantir o bom funcionamento da **persistência de registros** no banco de dados.
+
+| Entidade | Cobertura |
+|---|---|
+| `Users` | Criação, leitura e persistência de dados do usuário |
+| `Books` | Cadastro e recuperação de publicações |
+| `Follows` | Registro e integridade das interações (follow up / follow down) |
+
+> Os testes garantem que o ciclo de vida de cada entidade está funcionando corretamente, prevenindo regressões na camada de persistência.
+
+---
+
 ## ⚙️ Tecnologias
 
 | Tecnologia | Descrição |

@@ -14,7 +14,7 @@ export async function toggleFollow(
       id_book: payload.id_book,
       id_onboarding_user: payload.id_onboarding_user,
       is_followup: payload.type === 'UP',
-      is_followdown: payload.   type === 'DOWN',
+      is_followdown: payload.type === 'DOWN',
     }),
   })
 
