@@ -1,36 +1,132 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Juridiq Library
 
-## Getting Started
+Sistema de recomendação de livros, com onboarding de usuários e sistema de reações (follow up / follow down) para da engajamento nos melhores títulos.
 
-First, run the development server:
+---
+
+## 🚀 Como rodar o projeto
+
+### 1. Clonar o repositório
+
+```bash
+git clone git@github.com:BrunaCardoso7/next-library.git
+cd next-library
+```
+
+### 2. Instalar dependências
+
+```bash
+npm install
+# ou
+yarn install
+# ou
+pnpm install
+```
+
+### 3. Subir o banco de dados (Docker)
+
+O projeto utiliza PostgreSQL via Docker.
+
+```bash
+docker compose -f docker-compose.db.yml up -d
+```
+
+### 4. Rodar o projeto
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicação estará disponível em:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🧱 Arquitetura do projeto
 
-To learn more about Next.js, take a look at the following resources:
+O projeto segue uma arquitetura **feature-based**, com foco em escalabilidade e separação de responsabilidades.
+A ideia é agrupar código por contexto de negócio, e não por tipo técnico.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 📁 Estrutura de pastas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+  api/                # Rotas da API (Next.js server actions)
+  library/            # Página principal da biblioteca
+  layout.tsx          # Layout global
+  page.tsx            # Página inicial
 
-## Deploy on Vercel
+components/           # Componentes reutilizáveis globais
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+entities/             # Modelos de domínio (TypeORM / entidades)
+  Book.ts
+  Follow.ts
+  Onboarding.ts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+features/             # Camadas por domínio (FEATURE-BASED)
+  follow/
+    components/
+    hooks/
+    services/
+    schemas/
+    types/
+
+  onboarding/
+  library/
+
+lib/                  # Configurações globais (DB, helpers)
+
+public/               # Assets estáticos
+```
+
+---
+
+## 🧠 Conceito da arquitetura
+
+Cada feature contém tudo que ela precisa:
+
+- **components** — UI local
+- **hooks** — lógica
+- **services** — API calls
+- **schemas** — validação
+- **types** — tipagem
+
+Isso evita:
+
+- acoplamento global
+- arquivos gigantes
+- lógica espalhada
+
+---
+
+## 🗄️ Banco de dados
+
+- PostgreSQL
+- Rodando via Docker
+- ORM: TypeORM
+
+---
+
+## ⚙️ Tecnologias
+
+| Tecnologia | Descrição |
+|---|---|
+| Next.js (App Router) | Framework React fullstack |
+| Tanstack Query | Gerenciamento de cache e estado assíncrono |
+| React Hook Form | Formulários performáticos |
+| Zod | Validação de esquemas |
+| TypeORM | ORM para TypeScript |
+| PostgreSQL | Banco de dados relacional |
+| Docker | Containerização do banco de dados |
+
+---
+
+## 📌 Próximos passos
+
+- [ ] Controle de acesso de usuário via token
+- [ ] Métricas para escritores acompanharem: livros mais engajados, menos engajados, total de followup
+- [ ] Revisão de código dimuindo ascessão de lógica em componentes
+- [ ] Aplicar testes automatizados para componentes
