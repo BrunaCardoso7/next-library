@@ -1,54 +1,83 @@
-# Next Library
+# 📚 Next Library
 
-Sistema de recomendação de livros, com onboarding de usuários e sistema de reações (follow up / follow down) para da engajamento nos melhores títulos.
+> Plataforma que conecta leitores e escritores através de recomendações e interação com livros.
 
 ---
 
-## 🚀 Como rodar o projeto
+## 🧠 Sobre o sistema
 
-### 1. Clonar o repositório
+O Next Library é baseado em três pilares principais:
 
-```bash
-git clone git@github.com:BrunaCardoso7/next-library.git
-cd next-library
-```
+- 📖 **Descoberta de livros relevantes**
+- 👤 **Identificação contínua de usuários**
+- 📊 **Engajamento e análise de interações**
 
-### 2. Instalar dependências
+---
 
-```bash
-npm install
-# ou
-yarn install
-# ou
-pnpm install
-```
+## 👤 Identificação e persistência de usuário
 
-### 3. Subir o banco de dados (Docker)
+A aplicação identifica usuários de forma contínua utilizando **CPF** como chave de reconhecimento.
 
-O projeto utiliza PostgreSQL via Docker.
+Isso significa que:
 
-```bash
-docker compose -f docker-compose.db.yml up -d
-```
+- O usuário não perde seus dados entre sessões
+- O onboarding só é feito uma vez
+- O histórico de interações (follow up / follow down) é persistido
+- A experiência é contínua mesmo sem autenticação tradicional
 
-### 4. Rodar o projeto
+---
 
-```bash
-npm run dev
-```
+## ✍️ Modo escritor (publicação e análise)
 
-A aplicação estará disponível em:
+Usuários no papel de escritor possuem uma área dedicada para acompanhamento de suas publicações.
 
-```
-http://localhost:3000
-```
+Nessa área é possível:
+
+- 📊 **Visualizar engajamento** de cada livro individualmente
+  - Follow ups (curtidas / interesse positivo)
+  - Follow downs (desinteresse)
+- 👀 **Monitorar performance** por publicação
+- 📚 **Acompanhar** quais títulos geram mais interesse
+- 📈 **Entender comportamento** dos leitores ao longo do tempo
+
+> Isso transforma a plataforma também em um **painel analítico de conteúdo**.
+
+---
+
+## 🔎 Busca e recomendação de livros
+
+A plataforma possui um sistema de busca inteligente que permite:
+
+- 🔍 Buscar livros por título
+- 📌 Filtrar conteúdos de interesse do usuário
+- 🎯 Reforçar recomendações baseadas em interações anteriores
+- 📚 Sugerir livros alinhados ao histórico de engajamento
+
+O objetivo é criar uma **experiência de descoberta contínua**, onde o sistema aprende com o comportamento do usuário.
+
+---
+
+## ❤️ Sistema de reações (engajamento)
+
+Cada livro pode receber interações:
+
+| Reação | Significado |
+|---|---|
+| 👍 Follow up | Indica interesse / engajamento positivo |
+| 👎 Follow down | Indica desinteresse |
+
+Esses dados alimentam:
+
+- Sistema de recomendação
+- Ranking de livros
+- Dashboard de escritores
+- Métricas de engajamento da plataforma
 
 ---
 
 ## 🧱 Arquitetura do projeto
 
 O projeto segue uma arquitetura **feature-based**, com foco em escalabilidade e separação de responsabilidades.
-A ideia é agrupar código por contexto de negócio, e não por tipo técnico.
 
 ### 📁 Estrutura de pastas
 
@@ -61,19 +90,13 @@ app/
 
 components/           # Componentes reutilizáveis globais
 
-entities/             # Modelos de domínio (TypeORM / entidades)
+entities/             # Modelos de domínio (TypeORM)
   Book.ts
   Follow.ts
   Onboarding.ts
 
-features/             # Camadas por domínio (FEATURE-BASED)
+features/             # Domínios da aplicação
   follow/
-    components/
-    hooks/
-    services/
-    schemas/
-    types/
-
   onboarding/
   library/
 
@@ -82,31 +105,31 @@ lib/                  # Configurações globais (DB, helpers)
 public/               # Assets estáticos
 ```
 
----
+### 🧠 Conceito da arquitetura
 
-## 🧠 Conceito da arquitetura
+Cada feature é isolada e contém tudo que precisa:
 
-Cada feature contém tudo que ela precisa:
+- **components** → UI específica do domínio
+- **hooks** → lógica de estado e comportamento
+- **services** → comunicação com API
+- **schemas** → validação de dados
+- **types** → tipagem do domínio
 
-- **components** — UI local
-- **hooks** — lógica
-- **services** — API calls
-- **schemas** — validação
-- **types** — tipagem
-
-Isso evita:
-
-- acoplamento global
-- arquivos gigantes
-- lógica espalhada
+> Isso reduz acoplamento e facilita a evolução do sistema.
 
 ---
 
 ## 🗄️ Banco de dados
 
-- PostgreSQL
-- Rodando via Docker
-- ORM: TypeORM
+- **PostgreSQL** — banco relacional
+- Rodando via **Docker**
+- ORM: **TypeORM**
+
+Relações principais:
+
+- `Users` (Onboarding)
+- `Books`
+- `Follows` (interações)
 
 ---
 
@@ -114,19 +137,24 @@ Isso evita:
 
 | Tecnologia | Descrição |
 |---|---|
-| Next.js (App Router) | Framework React fullstack |
-| Tanstack Query | Gerenciamento de cache e estado assíncrono |
-| React Hook Form | Formulários performáticos |
-| Zod | Validação de esquemas |
-| TypeORM | ORM para TypeScript |
-| PostgreSQL | Banco de dados relacional |
-| Docker | Containerização do banco de dados |
+| Next.js (App Router) | Framework fullstack |
+| TypeORM | ORM TypeScript |
+| PostgreSQL | Banco relacional |
+| TanStack Query | Cache e estado assíncrono |
+| React Hook Form | Formulários |
+| Zod | Validação |
+| Docker | Infraestrutura local |
 
 ---
 
 ## 📌 Próximos passos
 
-- [ ] Controle de acesso de usuário via token
-- [ ] Métricas para escritores acompanharem: livros mais engajados, menos engajados, total de followup
-- [ ] Revisão de código dimuindo ascessão de lógica em componentes
-- [ ] Aplicar testes automatizados para componentes
+- [ ] Autenticação formal com token (JWT)
+- [ ] Dashboard avançado para escritores
+  - [ ] Livros mais engajados
+  - [ ] Livros menos engajados
+  - [ ] Evolução de engajamento ao longo do tempo
+- [ ] Melhorar separação de regras de domínio
+- [ ] Testes automatizados de componentes e integração
+- [ ] Recomendação baseada em histórico de leitura real
+- [ ] Ranking de livros por engajamento global
