@@ -4,6 +4,7 @@ import {
   useCallback,
   useEffect,
   useRef,
+  useState,
 } from 'react'
 
 type UseInfiniteScrollProps = {
@@ -17,13 +18,15 @@ export function useInfiniteScroll({
   isLoading,
   onLoadMore,
 }: UseInfiniteScrollProps) {
-  const observerTarget =
-    useRef<HTMLDivElement>(null)
+  const [node, setNode] = useState<HTMLDivElement | null>(null)
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
   const handleIntersection =
     useCallback(
       (entries: IntersectionObserverEntry[]) => {
         const [entry] = entries
+
+        if (!entry) return
 
         if (
           entry.isIntersecting &&
@@ -38,27 +41,35 @@ export function useInfiniteScroll({
     )
 
   useEffect(() => {
-    const observer =
-      new IntersectionObserver(
-        handleIntersection,
-        {
-          threshold: 0.1,
-        }
-      )
+    if (typeof IntersectionObserver === 'undefined') return
 
-    const currentTarget =
-      observerTarget.current
+    observerRef.current = new IntersectionObserver(handleIntersection, {
+      root: null,
+      rootMargin: '200px',
+      threshold: 0,
+    })
 
-    if (currentTarget) {
-      observer.observe(currentTarget)
+    const currentObserver = observerRef.current
+
+    if (node) {
+      currentObserver.observe(node)
     }
 
     return () => {
-      if (currentTarget) {
-        observer.unobserve(currentTarget)
+      try {
+        if (node && currentObserver) currentObserver.unobserve(node)
+      } catch (e) {
+      }
+      try {
+        currentObserver && currentObserver.disconnect()
+      } catch (e) {
       }
     }
-  }, [handleIntersection])
+  }, [node, handleIntersection])
+
+  const observerTarget = useCallback((el: HTMLDivElement | null) => {
+    setNode(el)
+  }, [])
 
   return {
     observerTarget,

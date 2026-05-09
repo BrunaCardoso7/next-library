@@ -15,7 +15,7 @@ O Next Library é baseado em três pilares principais:
 ---
 
 ## 👤 Identificação e persistência de usuário
-
+![texto alternativo](/public/login.png)
 A aplicação identifica usuários de forma contínua utilizando **CPF** como chave de reconhecimento.
 
 Isso significa que:
@@ -30,7 +30,7 @@ Isso significa que:
 ## ✍️ Modo escritor (publicação e análise)
 
 Usuários no papel de escritor possuem uma área dedicada para acompanhamento de suas publicações.
-
+![texto alternativo](/public/cadastro.png)
 Nessa área é possível:
 
 - 📊 **Visualizar engajamento** de cada livro individualmente
@@ -45,7 +45,7 @@ Nessa área é possível:
 ---
 
 ## 🔎 Busca e recomendação de livros
-
+![texto alternativo](/public/escritor.png)
 A plataforma possui um sistema de busca inteligente que permite:
 
 - 🔍 Buscar livros por título
@@ -60,7 +60,7 @@ O objetivo é criar uma **experiência de descoberta contínua**, onde o sistema
 ## ❤️ Sistema de reações (engajamento)
 
 Cada livro pode receber interações:
-
+![texto alternativo](/public/reacao.png)
 | Reação | Significado |
 |---|---|
 | 👍 Follow up | Indica interesse / engajamento positivo |

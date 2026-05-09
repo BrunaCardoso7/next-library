@@ -7,16 +7,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { onboardingSchema } from '../schemas/onboarding.schema'
 import { OnboardingFormValues } from '../types/onboarding.types'
 import { useOnboardingContext } from '../providers/onboarding-provider'
+import { useCreateOnboardingMutation } from './useCreateOnboardingMutation'
+import { useUpdateOnboardingMutation } from './useUpdateOnboarding'
 
 export function useOnboardingForm() {
   const router = useRouter()
-
-  const {
-    data,
-    setData,
-    clear,
-  } = useOnboardingContext()
-
+  const { data, setData, clear } = useOnboardingContext()
   const user_id = data?.id
 
   const form =
@@ -31,16 +27,16 @@ export function useOnboardingForm() {
 
   function handleSuccess(response: any) {
     const user = response.data
-
     setData({
       id: user.id,
       nm_user: user.nm_user,
       nr_cpf: user.nr_cpf,
       ie_role: user.ie_role,
     })
-
     router.push('/library')
   }
+  const createMutation = useCreateOnboardingMutation()
+  const updateMutation = useUpdateOnboardingMutation()
 
   const onSubmit = async (
     values: OnboardingFormValues
@@ -51,48 +47,31 @@ export function useOnboardingForm() {
       ie_role: values.ie_role,
     }
 
-    // EDITAR usuário existente
-    if (data?.id) {
-      const response = await fetch(
-        `/api/user/${data.id}`,
-        {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(payload),
-        }
+    if (user_id) {
+      updateMutation.mutate(
+        { user_id, data: payload },
+        { onSuccess: handleSuccess }
       )
-
-      const updatedUser =
-        await response.json()
-
-      handleSuccess(updatedUser)
-
       return
     }
 
-    // NOVO usuário
-    // limpa onboarding antigo
     clear()
 
-    const response = await fetch('/api/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
+    createMutation.mutate(payload, {
+      onSuccess: handleSuccess,
     })
-
-    const createdUser =
-      await response.json()
-
-    handleSuccess(createdUser)
   }
+
+  const isLoading = createMutation.isPending || updateMutation.isPending
+  const isError = createMutation.isError || updateMutation.isError
+  const error = createMutation.error || updateMutation.error
 
   return {
     form,
     onSubmit,
     user_id,
+    isLoading,
+    isError,
+    error,
   }
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { OnboardingFormValues, User } from '../types/onboarding.types'
+import { User } from '../types/onboarding.types'
 
 type OnboardingContextType = {
   data: Partial<User>

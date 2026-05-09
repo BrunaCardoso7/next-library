@@ -2,7 +2,7 @@ import { useOnboardingContext } from '@/features/onboarding/providers/onboarding
 import { BooksFormData, booksSchema } from '../schemas/book.schema'
 import { useCreateBookMutation } from './useBookmutation'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { useForm, UseFormReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { useQueryClient } from '@tanstack/react-query'
@@ -10,46 +10,27 @@ import { CreateBookPayload } from '../types/library.types'
 
 export function useFormBook() {
   const router = useRouter()
-
   const queryClient = useQueryClient()
-
   const { data, setData } = useOnboardingContext()
-
   const mutation = useCreateBookMutation()
-
   const userId = data?.id
-
   const nm_user = data?.nm_user || ''
 
   const form = useForm({
     resolver: zodResolver(booksSchema),
-    mode: 'onChange',
-
-    defaultValues: {
-      nm_title: '',
-      nm_author: '',
-      dt_published_year: new Date().getFullYear(),
-      nm_user_cri: nm_user,
-    },
-  })
+  }) as UseFormReturn<BooksFormData>
 
   const onSubmit = async (
     formData: BooksFormData
   ) => {
     if (!userId) {
-      toast.error(
-        'Usuário de onboarding não encontrado'
-      )
-
+      toast.error('Usuário de onboarding não encontrado')
       return
     }
 
     const payload: CreateBookPayload = {
       ...formData,
-
-      nm_user_cri:
-        formData.nm_user_cri || nm_user,
-
+      nm_user_cri: formData.nm_user_cri || nm_user,
       id_onboarding_user: userId,
     }
 
@@ -57,11 +38,7 @@ export function useFormBook() {
       onSuccess: (response) => {
         setData({
           ...data,
-
-          nm_user:
-            response.data?.nm_user_cri ||
-            form.getValues('nm_user_cri'),
-
+          nm_user: response.data?.nm_user_cri || form.getValues('nm_user_cri'),
           ie_role: 'writer',
         })
 
@@ -77,9 +54,7 @@ export function useFormBook() {
           ],
         })
 
-        toast.success(
-          'Livro criado com sucesso'
-        )
+        toast.success('Livro criado com sucesso')
 
         router.push('/library')
       },
