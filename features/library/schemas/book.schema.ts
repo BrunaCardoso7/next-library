@@ -21,9 +21,13 @@ export const booksSchema = z.object({
       'Ano não pode ser no futuro'
     ),
 
-  nr_followup: z.coerce
+  nr_followup_count: z.coerce
     .number()
     .min(0, 'Follow-up deve ser positivo'),
+
+  nr_followdown_count: z.coerce
+    .number()
+    .min(0, 'Follow-down deve ser positivo'),
 
   dt_criado: z.date().optional(),
 

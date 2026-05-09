@@ -19,8 +19,11 @@ export class Book {
   @Column({ type: 'int' })
   dt_published_year!: number
 
-  @Column({ type: 'int' })
-  nr_followup!: number
+  @Column({ default: 0 })
+  nr_followup_count!: number
+
+  @Column({ default: 0 })
+  nr_followdown_count!: number;
 
   @Column({ type: 'timestamp', nullable: true, default: () => 'CURRENT_TIMESTAMP' })
   dt_criado?: Date

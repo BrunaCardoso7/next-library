@@ -1,6 +1,5 @@
 'use client'
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
 import {
   Item,
   ItemActions,
@@ -10,6 +9,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item"
 import { Book } from "../types/library.types"
+import { BookActions } from "./BookActions"
 
 export function BookItem({ nm_title, nm_author }: Book) {
 
@@ -26,7 +26,7 @@ export function BookItem({ nm_title, nm_author }: Book) {
         <ItemDescription>{nm_author}</ItemDescription>
       </ItemContent>
       <ItemActions>
-        <Button>Action</Button>
+        <BookActions />
       </ItemActions>
     </Item>
   )
