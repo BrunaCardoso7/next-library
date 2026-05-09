@@ -1,13 +1,21 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import createUser from '../services/createOnboarding'
 
 
 export function useCreateOnboardingMutation() {
-  const mutation = useMutation({
+  const queryClient = useQueryClient()
+  return useMutation({
     mutationFn: createUser,
-  })
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: ['onboarding-user'],
+      })
 
-  return mutation
+      queryClient.invalidateQueries({
+        queryKey: ['books'],
+      })
+  },
+  })
 }

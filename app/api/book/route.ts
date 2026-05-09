@@ -104,13 +104,20 @@ export async function POST(req: NextRequest) {
 
   const repository = db.getRepository(Book)
 
+  
   const book = repository.create({
     nm_title: parsed.data.nm_title,
     nm_author: parsed.data.nm_author,
     nm_user_cri: parsed.data.nm_user_cri,
-    dt_published_year: parsed.data.dt_published_year,
-    nr_followup_count: parsed.data.nr_followup_count,
-    nr_followdown_count: parsed.data.nr_followdown_count,
+    dt_published_year:
+      parsed.data.dt_published_year,
+    nr_followup_count:
+      parsed.data.nr_followup_count,
+    nr_followdown_count:
+      parsed.data.nr_followdown_count,
+    onboarding_user: {
+      id: Number(body.id_onboarding_user),
+    },
   })
 
   await repository.save(book)

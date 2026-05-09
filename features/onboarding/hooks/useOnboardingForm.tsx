@@ -1,25 +1,27 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+
 import { onboardingSchema } from '../schemas/onboarding.schema'
 import { OnboardingFormValues } from '../types/onboarding.types'
-import { useOnboardingContext,} from '../providers/onboarding-provider'
-
-
-import { useCreateOnboardingMutation,} from './useCreateOnboardingMutation'
-import { useUpdateOnboardingMutation } from './useUpdateOnboarding'
+import { useOnboardingContext } from '../providers/onboarding-provider'
 
 export function useOnboardingForm() {
   const router = useRouter()
-  const { data, setData, } = useOnboardingContext()
-  const [userId, setUserId,] = useState<number | null>(null)
+
+  const {
+    data,
+    setData,
+    clear,
+  } = useOnboardingContext()
+
+  const user_id = data?.id
 
   const form =
     useForm<OnboardingFormValues>({
-      resolver: zodResolver( onboardingSchema),
+      resolver: zodResolver(onboardingSchema),
       defaultValues: {
         nm_user: '',
         nr_cpf: '',
@@ -27,67 +29,70 @@ export function useOnboardingForm() {
       },
     })
 
-  const updateMutation = useUpdateOnboardingMutation()
-
-  const createMutation = useCreateOnboardingMutation()
-
   function handleSuccess(response: any) {
+    const user = response.data
+
     setData({
-      nm_user: response.data?.nm_user || form.getValues('nm_user'),
-      nr_cpf: response.data?.nr_cpf || form.getValues('nr_cpf'),
-      ie_role: response.data?.ie_role || form.getValues('ie_role'),
+      id: user.id,
+      nm_user: user.nm_user,
+      nr_cpf: user.nr_cpf,
+      ie_role: user.ie_role,
     })
+
     router.push('/library')
   }
 
-  function onSubmit(
-    formData: OnboardingFormValues
-  ) {
-    if (userId) {
+  const onSubmit = async (
+    values: OnboardingFormValues
+  ) => {
+    const payload = {
+      nm_user: values.nm_user,
+      nr_cpf: values.nr_cpf,
+      ie_role: values.ie_role,
+    }
 
-      updateMutation.mutate(
+    // EDITAR usuário existente
+    if (data?.id) {
+      const response = await fetch(
+        `/api/user/${data.id}`,
         {
-          user_id: userId,
-          data: formData,
-        },
-        { onSuccess: handleSuccess }
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payload),
+        }
       )
+
+      const updatedUser =
+        await response.json()
+
+      handleSuccess(updatedUser)
+
       return
     }
 
-    createMutation.mutate(
-      formData,
-      { onSuccess: handleSuccess }
-    )
-  }
+    // NOVO usuário
+    // limpa onboarding antigo
+    clear()
 
-  function setRole(role: 'visitor' | 'writer') {
-    form.setValue('ie_role', role)
-
-    setData({
-      nm_user:
-        data.nm_user ||
-        form.getValues('nm_user'),
-      nr_cpf:
-        data.nr_cpf ||
-        form.getValues('nr_cpf'),
-      ie_role: role,
+    const response = await fetch('/api/user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
     })
+
+    const createdUser =
+      await response.json()
+
+    handleSuccess(createdUser)
   }
 
   return {
     form,
     onSubmit,
-    setRole,
-    setUserId,
-    isLoading:
-      createMutation.isPending ||
-      updateMutation.isPending,
-    isError:
-      createMutation.isError ||
-      updateMutation.isError,
-    error:
-      createMutation.error ||
-      updateMutation.error,
+    user_id,
   }
 }

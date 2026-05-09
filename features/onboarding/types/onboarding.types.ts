@@ -8,6 +8,7 @@ export type OnboardingFormValues = z.infer<typeof onboardingSchema> & {
 }
 
 export interface User {
+  id: number
   nm_user: string
   nr_cpf?: string
   ie_role: UserRole

@@ -1,3 +1,5 @@
+import { BooksFormData } from "../schemas/book.schema"
+
 export type ReactionType = 'UP' | 'DOWN' | null
 
 export interface Book {
@@ -10,4 +12,7 @@ export interface Book {
   nr_followup_count: number
   nm_user_cri?: string
   user_reaction?: ReactionType
+}
+export type CreateBookPayload = BooksFormData & {
+  id_onboarding_user?: number
 }

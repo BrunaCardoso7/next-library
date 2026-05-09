@@ -21,17 +21,13 @@ export function useSearchBooks(
 ) {
   const queryClient = useQueryClient()
 
-  // Busca no cache local
   const filteredBooks = useMemo(() => {
-    // Pega os dados do cache da query infinita
     const cachedData = queryClient.getQueryData(['books', id_onboarding_user]) as any
 
     if (!cachedData?.pages) return []
 
-    // Agrupa todos os livros de todas as páginas
     const allBooks = cachedData.pages.flatMap((page: any) => page.books) as Book[]
 
-    // Filtra por título (contém, case-insensitive)
     if (!searchTerm.trim()) return allBooks
 
     return allBooks.filter(book =>

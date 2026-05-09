@@ -3,7 +3,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  JoinColumn,
+  ManyToOne,
 } from 'typeorm'
+import { Onboarding } from './Onboarding'
 
 @Entity('book')
 export class Book {
@@ -18,6 +21,12 @@ export class Book {
 
   @Column({ type: 'int' })
   dt_published_year!: number
+
+  @ManyToOne(() => Onboarding)
+  @JoinColumn({
+    name: 'id_onboarding_user',
+  })
+  onboarding_user!: Onboarding
 
   @Column({ default: 0 })
   nr_followup_count!: number

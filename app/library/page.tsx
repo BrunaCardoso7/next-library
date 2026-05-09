@@ -2,29 +2,29 @@
 
 import { useState } from "react";
 import { SearchInput } from "@/components/shared/inputsearch";
-import { BookItem } from "../../features/library/components/BookItem";
 import { useBooksQuery } from "@/features/library/hooks/useBookQuery";
 import { useSearchBooks } from "@/features/library/hooks/useSearchBooks";
 import Load from "@/components/shared/load";
-import { toastError } from "@/components/shared/toast";
 import { BookList } from "@/features/library/components/BookList";
+import { useOnboardingContext } from "@/features/onboarding/providers/onboarding-provider";
 
 
 export default function LibraryPage() {
-  // TODO: pegar do contexto de autenticação
-  const id_onboarding_user = 1
-  
-  const [searchTerm, setSearchTerm] = useState('')
+  const { data } = useOnboardingContext()
+  const id_onboarding_user = data?.id ?? 1
+  const role = data?.ie_role ?? 'visitor'
 
-  // Query para listar todos os livros
+  console.log('ID do usuário de onboarding:', id_onboarding_user) 
+  console.log('ID do usuário de onboarding:', data.id) 
+  const [searchTerm, setSearchTerm] = useState('')  
+
   const { data: allBooksData, isLoading: isLoadingAll, isError: isErrorAll, error: errorAll, hasNextPage, fetchNextPage, isFetchingNextPage } = useBooksQuery({
-    id_onboarding_user
+    id_onboarding_user,
+    ie_role: role,
   })
 
-  // Query para buscar por título (do cache local)
   const { books: searchResults } = useSearchBooks(searchTerm, id_onboarding_user)
 
-  // Define qual dado usar baseado se há busca ou não
   const isSearching = searchTerm.trim().length > 0
   const allBooks = isSearching ? searchResults : (allBooksData?.pages?.flatMap((page: any) => page.books) ?? [])
 
@@ -48,4 +48,3 @@ export default function LibraryPage() {
     </div>
   );
 }
- 

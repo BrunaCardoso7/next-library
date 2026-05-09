@@ -29,7 +29,7 @@ export function OnboardingForm({
   ...props
 }: React.ComponentProps<"div">) {
 
-  const { form, onSubmit, isLoading, setRole, setUserId } = useOnboarding()
+  const { form, onSubmit, isLoading,  setUserId } = useOnboarding()
   const { errors } = form.formState
   const { lookupByCPF, isLoading: isLookingUp } = useCPFLookup(
     form.setValue,
@@ -37,7 +37,7 @@ export function OnboardingForm({
   )
   const cpf = form.watch('nr_cpf')
   useCpfAutoLookup(cpf, lookupByCPF)
-  
+
   return (
     <div className={cn("flex flex-col gap-6 w-full max-w-md mx-auto", className)} {...props}>
       <Card className="rounded-4xl">

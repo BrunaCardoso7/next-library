@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react'
 import { UseFormSetValue } from 'react-hook-form'
+import { useOnboardingContext } from '../providers/onboarding-provider'
 
 export interface UserFound {
   id: number
@@ -16,7 +17,7 @@ export function useCPFLookup(
 ) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
+  const { setData } = useOnboardingContext()
   const lookupByCPF = useCallback(async (cpf: string) => {
     if (!cpf) {
       setError(null)
@@ -32,18 +33,18 @@ export function useCPFLookup(
       if (response.ok) {
         const user: UserFound = await response.json()
         console.log('Usuário encontrado:', user)
-        // Auto-completa o nome com o usuário encontrado
+
+        if (user) {
+          setData(user)
+        }
         setValue('nm_user', user.nm_user)
-        // Carrega o papel anterior do usuário (pode ser editado)
         setValue('ie_role', user.ie_role)
-        // Passa o ID do usuário para fazer update
         onUserFound(user.id)
         setError(null)
       } else {
-        // Usuário não encontrado - limpa o nome para nova criação
         console.log('Usuário não encontrado')
         setValue('nm_user', '')
-        onUserFound(0) // 0 significa criação nova
+        onUserFound(0) 
         setError(null)
       }
     } catch (err) {

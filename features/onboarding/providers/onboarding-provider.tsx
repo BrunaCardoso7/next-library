@@ -1,11 +1,11 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { OnboardingFormValues } from '../types/onboarding.types'
+import { OnboardingFormValues, User } from '../types/onboarding.types'
 
 type OnboardingContextType = {
-  data: Partial<OnboardingFormValues>
-  setData: (data: Partial<OnboardingFormValues>) => void
+  data: Partial<User>
+  setData: (data: Partial<User>) => void
   clear: () => void
 }
 
@@ -16,7 +16,7 @@ export function OnboardingProvider({
 }: {
   children: React.ReactNode
 }) {
-  const [data, setDataState] = useState<Partial<OnboardingFormValues>>({})
+  const [data, setDataState] = useState<Partial<User>>({})
 
   useEffect(() => {
     const saved = localStorage.getItem('onboarding')
@@ -25,7 +25,7 @@ export function OnboardingProvider({
     }
   }, [])
 
-  const setData = (newData: Partial<OnboardingFormValues>) => {
+  const setData = (newData: Partial<User>) => {
     const updated = {
       ...data,
       ...newData,
