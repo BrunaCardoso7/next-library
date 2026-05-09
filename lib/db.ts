@@ -19,7 +19,7 @@ export const AppDataSource =
     password: 'admin',
     database: 'juridiq',
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: [Book, Onboarding, Follow],
   })
 
