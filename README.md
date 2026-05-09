@@ -1,4 +1,4 @@
-# Juridiq Library
+# Next Library
 
 Sistema de recomendação de livros, com onboarding de usuários e sistema de reações (follow up / follow down) para da engajamento nos melhores títulos.
 
