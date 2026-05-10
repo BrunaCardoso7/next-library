@@ -81,6 +81,7 @@ Esses dados alimentam:
 
 ```bash
 git clone https://github.com/BrunaCardoso7/next-library.git
+code next-library ou
 cd next-library
 
 
