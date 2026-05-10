@@ -92,10 +92,6 @@ npm install
 ```bash
 docker compose -f docker-compose.db.yml up -d
 
-### ⚙️ Rodar migrations (caso necessário)
-```bash
-npm run migration:run
-
 ### 🌐 Rodar a aplicação
 ```bash 
 npm run dev
