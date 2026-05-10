@@ -104,6 +104,9 @@ http://localhost:3000
 ```bash 
 npm run test
 
+```
+
+
 ## 🧱 Arquitetura do projeto
 
 O projeto segue uma arquitetura **feature-based**, com foco em escalabilidade e separação de responsabilidades.
