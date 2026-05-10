@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { SearchInput } from "@/components/shared/inputsearch";
 import { useBooksQuery } from "@/features/library/hooks/useBookQuery";
-import { useSearchBooks } from "@/features/library/hooks/useSearchBooks";
 import Load from "@/components/shared/load";
 import { BookList } from "@/features/library/components/BookList";
 import { useOnboardingContext } from "@/features/onboarding/providers/onboarding-provider";
@@ -28,9 +27,14 @@ export default function LibraryPage() {
     enabled: hydrated,
   })
 
-  const { books: searchResults } = useSearchBooks(searchTerm, id_onboarding_user, role)
   const isSearching = searchTerm.trim().length > 0
-  const allBooks = isSearching ? searchResults : (allBooksData?.pages?.flatMap((page: any) => page.books) ?? [])
+  const allBooksFlat = allBooksData?.pages?.flatMap((page: any) => page.books) ?? []
+
+const allBooks = isSearching
+  ? allBooksFlat.filter(book =>
+      book.nm_title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  : allBooksFlat
 
   return (
     <div className="min-h-screen flex flex-1 w-full flex-col mx-auto items-center mt-8 justify-start font-sans dark:bg-black text-zinc-800 dark:text-zinc-200">
@@ -46,6 +50,7 @@ export default function LibraryPage() {
               onLoadMore={isSearching ? undefined : fetchNextPage}
               hasMore={isSearching ? false : (hasNextPage || false)}
               isLoading={isSearching ? false : isFetchingNextPage}
+              ie_role={role}
             />
         </div>
     </div>

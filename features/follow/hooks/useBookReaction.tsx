@@ -10,12 +10,14 @@ type BookReactionParams = {
   id_book: number
   id_onboarding_user: number
   currentReaction?: ReactionType | null
+  ie_role?: string
 }
 
 export function useBookReaction({
   id_book,
   id_onboarding_user,
   currentReaction,
+  ie_role
 }: BookReactionParams) {
   const queryClient = useQueryClient()
   const toggleMutation = useCreateFollowMutation()
@@ -23,7 +25,7 @@ export function useBookReaction({
 
   async function handleReaction(type: ReactionType) {
     // Atualiza o cache otimisticamente antes de fazer a requisição
-    queryClient.setQueryData(['books', id_onboarding_user], (oldData: any) => {
+    queryClient.setQueryData(['books', id_onboarding_user, ie_role], (oldData: any) => {
       if (!oldData) return oldData
 
       return {
@@ -31,8 +33,7 @@ export function useBookReaction({
         pages: oldData.pages.map((page: any) => ({
           ...page,
           books: page.books.map((book: any) => {
-            if (book.id !== id_book) return book
-
+            if (Number(book.id) !== id_book) return book
             // Se clicou na mesma reação, remove
             if (currentReaction === type) {
               return {
@@ -73,12 +74,12 @@ export function useBookReaction({
 
       // Invalida o cache para garantir sincronização com o backend
       queryClient.invalidateQueries({
-        queryKey: ['books', id_onboarding_user],
+        queryKey: ['books', id_onboarding_user, ie_role],
       })
     } catch (error) {
       // Se falhar, invalida o cache para refetch
       queryClient.invalidateQueries({
-        queryKey: ['books', id_onboarding_user],
+        queryKey: ['books', id_onboarding_user, ie_role],
       })
       throw error
     }

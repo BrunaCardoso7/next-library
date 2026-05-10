@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from "react"
 import { BookItem } from "./BookItem"
 import { Book } from "../types/library.types"
 import Load from "@/components/shared/load"
@@ -11,6 +10,7 @@ type BookListProps = {
   onLoadMore?: () => void
   hasMore?: boolean
   isLoading?: boolean
+  ie_role?: string
 }
 
 export function BookList({
@@ -18,6 +18,7 @@ export function BookList({
   onLoadMore,
   hasMore = false,
   isLoading = false,
+  ie_role,
 }: BookListProps) {
   const books = Array.isArray(data) ? data : data?.books || []
   const { observerTarget } = useInfiniteScroll({ hasMore, isLoading, onLoadMore })
@@ -29,6 +30,7 @@ export function BookList({
         <BookItem
           key={book.id}
           {...book}
+          ie_role={ie_role}
         />
       ))}
       {hasMore && (

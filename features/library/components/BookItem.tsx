@@ -13,7 +13,9 @@ import { BookActions } from "./BookActions"
 import { Badge } from "@/components/ui/badge"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
 
-type BookItemProps = Book 
+type BookItemProps = Book & {
+  ie_role?: string
+}
 
 export function BookItem({
   id,
@@ -24,6 +26,7 @@ export function BookItem({
   nm_user_cri,
   nr_followup_count,
   nr_followdown_count,
+  ie_role
 }: BookItemProps) {
   return (
     <Item className="bg-white rounded-md p-4">
@@ -62,6 +65,7 @@ export function BookItem({
               user_reaction={user_reaction}
               nr_followup_count={nr_followup_count}
               nr_followdown_count={nr_followdown_count}
+              ie_role={ie_role}
             />
           )}
         </ItemActions>

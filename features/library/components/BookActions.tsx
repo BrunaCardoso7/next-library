@@ -11,6 +11,7 @@ type BookActionsProps = {
   user_reaction?: ReactionType
   nr_followup_count: number
   nr_followdown_count: number
+  ie_role?: string
 }
 
 export function BookActions({
@@ -18,12 +19,14 @@ export function BookActions({
   user_reaction,
   nr_followup_count,
   nr_followdown_count,
+  ie_role
 }: BookActionsProps) {
   const {data: user} = useOnboardingContext()
   const { handleReaction, isLoading } = useBookReaction({
     id_book,
     id_onboarding_user: user?.id ?? 0,
     currentReaction: user_reaction,
+    ie_role
   })
 
   const isUpActive = user_reaction === 'UP'
