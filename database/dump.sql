@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict t6rlIUXHgnq88f4dJldRjRhFjg9ld6cmGLkTzxbNimKSY9icWHaKEd5UDWcUzlE
+\restrict tXYSGOJrOfPLZWwsvazpNhgPyCpLGF9GRSPsmiWeBuOyUQqNMB8jD7mYSCoGxaq
 
 -- Dumped from database version 16.13 (Debian 16.13-1.pgdg13+1)
 -- Dumped by pg_dump version 16.13 (Debian 16.13-1.pgdg13+1)
@@ -184,7 +184,6 @@ ALTER TABLE ONLY public.onboarding ALTER COLUMN id SET DEFAULT nextval('public.o
 --
 
 COPY public.book (id, nm_title, nm_author, dt_published_year, nr_followup_count, nr_followdown_count, dt_criado, nm_user_cri, id_onboarding_user) FROM stdin;
-18	Domain-Driven Design	Eric Evans	2003	3	0	2026-05-09 23:22:07.240813	Sergio do Peões	2
 17	Head First Design Patterns	Eric Freeman, et al.	2004	1	2	2026-05-09 23:21:47.635652	Sergio do Peões	2
 16	Design Patterns: Elements of Reusable Object-Oriented Software	Erich Gamma, et al.	1994	2	1	2026-05-09 23:21:17.314565	Sergio do Peões	2
 15	Patterns of Enterprise Application Architecture	Martin Fowler	2002	1	2	2026-05-09 23:19:16.597593	Firmino Filho	2
@@ -202,6 +201,9 @@ COPY public.book (id, nm_title, nm_author, dt_published_year, nr_followup_count,
 3	Introduction to Algorithms	Thomas H. Cormen, et al.	2009	1	2	2026-05-09 23:12:44.039253	Bruna Cardoso	1
 2	The Art of Computer Programming	Donald Knuth	1968	2	1	2026-05-09 23:12:21.478604	Bruna Cardoso	1
 11	Refactoring	Martin Fowler	1999	2	0	2026-05-09 23:18:00.023399	Firmino Filho	2
+20	Programming Pearls	Jon Bentley	1986	4	0	2026-05-09 23:57:43.863418	Anitta Bang	3
+19	Cracking the Coding Interview	Gayle Laakmann McDowell	2011	4	0	2026-05-09 23:57:00.526876	Anitta Bang	3
+18	Domain-Driven Design	Eric Evans	2003	3	1	2026-05-09 23:22:07.240813	Sergio do Peões	2
 \.
 
 
@@ -260,6 +262,15 @@ COPY public.book_follow (id, is_followup, is_followdown, dt_criado, id_onboardin
 56	t	f	2026-05-09 23:25:24.460209	2	4
 57	f	t	2026-05-09 23:25:25.882283	2	3
 58	t	f	2026-05-09 23:25:27.009027	2	2
+59	t	f	2026-05-09 23:58:37.618894	3	20
+60	t	f	2026-05-09 23:58:38.793875	3	19
+61	t	f	2026-05-09 23:58:47.583893	1	20
+62	t	f	2026-05-09 23:58:48.631053	1	19
+63	t	f	2026-05-09 23:58:59.632942	2	20
+64	t	f	2026-05-09 23:59:00.642186	2	19
+65	t	f	2026-05-10 00:02:24.116041	4	20
+66	t	f	2026-05-10 00:02:25.138982	4	19
+67	f	t	2026-05-10 00:02:26.711672	4	18
 \.
 
 
@@ -270,7 +281,8 @@ COPY public.book_follow (id, is_followup, is_followdown, dt_criado, id_onboardin
 COPY public.onboarding (id, nm_user, nr_cpf, ie_role) FROM stdin;
 1	Bruna Cardoso	08768031335	visitor
 3	Anitta Bang	12345678912	visitor
-2	Sergio do Peões	98765432198	visitor
+2	Maria dos Santos	30661008800	visitor
+4	Luisa Sonza	96385274101	visitor
 \.
 
 
@@ -278,21 +290,21 @@ COPY public.onboarding (id, nm_user, nr_cpf, ie_role) FROM stdin;
 -- Name: book_follow_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.book_follow_id_seq', 58, true);
+SELECT pg_catalog.setval('public.book_follow_id_seq', 67, true);
 
 
 --
 -- Name: book_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.book_id_seq', 18, true);
+SELECT pg_catalog.setval('public.book_id_seq', 20, true);
 
 
 --
 -- Name: onboarding_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
 --
 
-SELECT pg_catalog.setval('public.onboarding_id_seq', 3, true);
+SELECT pg_catalog.setval('public.onboarding_id_seq', 4, true);
 
 
 --
@@ -362,5 +374,5 @@ ALTER TABLE ONLY public.book_follow
 -- PostgreSQL database dump complete
 --
 
-\unrestrict t6rlIUXHgnq88f4dJldRjRhFjg9ld6cmGLkTzxbNimKSY9icWHaKEd5UDWcUzlE
+\unrestrict tXYSGOJrOfPLZWwsvazpNhgPyCpLGF9GRSPsmiWeBuOyUQqNMB8jD7mYSCoGxaq
 
