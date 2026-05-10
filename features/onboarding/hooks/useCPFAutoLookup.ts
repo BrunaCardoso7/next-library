@@ -1,19 +1,21 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from 'react'
 
 export function useCpfAutoLookup(cpf: string, lookupByCPF: (cpf: string) => void) {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    const digits = cpf?.replace(/\D/g, '') ?? ''
+    
+    if (timerRef.current) clearTimeout(timerRef.current)
 
-    if (cpf && cpf.length >= 11) {
-      timeoutRef.current = setTimeout(() => {
-        lookupByCPF(cpf)
-      }, 800)
-    }
+    if (digits.length !== 11) return 
+
+    timerRef.current = setTimeout(() => {
+      lookupByCPF(digits)
+    }, 600)
 
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      if (timerRef.current) clearTimeout(timerRef.current)
     }
   }, [cpf, lookupByCPF])
 }

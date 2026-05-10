@@ -11,7 +11,6 @@ type BookListProps = {
   onLoadMore?: () => void
   hasMore?: boolean
   isLoading?: boolean
-  id_onboarding_user: number
 }
 
 export function BookList({
@@ -19,7 +18,6 @@ export function BookList({
   onLoadMore,
   hasMore = false,
   isLoading = false,
-  id_onboarding_user,
 }: BookListProps) {
   const books = Array.isArray(data) ? data : data?.books || []
   const { observerTarget } = useInfiniteScroll({ hasMore, isLoading, onLoadMore })
@@ -31,7 +29,6 @@ export function BookList({
         <BookItem
           key={book.id}
           {...book}
-          id_onboarding_user={id_onboarding_user}
         />
       ))}
       {hasMore && (

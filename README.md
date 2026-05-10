@@ -191,7 +191,7 @@ Foram implementados testes nas entidades principais do sistema para garantir o b
 ---
 
 ## 📌 Próximos passos
-
+- [ ] Privar rota para criação de livro
 - [ ] Autenticação formal com token (JWT)
 - [ ] Dashboard avançado para escritores
   - [ ] Livros mais engajados

@@ -6,11 +6,13 @@ import getBooks from '../services/getBooks'
 type UseBooksQueryProps = {
   id_onboarding_user?: number
   ie_role?: string
+  enabled?: boolean
 }
 
 export function useBooksQuery({
   id_onboarding_user,
   ie_role,
+  enabled
 }: UseBooksQueryProps = {}) {
   return useInfiniteQuery({
     queryKey: ['books', id_onboarding_user, ie_role],
@@ -29,10 +31,9 @@ export function useBooksQuery({
       if (lastPage.pagination.page < lastPage.pagination.totalPages) {
         return lastPage.pagination.page + 1
       }
-
       return undefined
     },
-
+    enabled: enabled && !!id_onboarding_user,
     staleTime: 1000 * 60 * 5,
   })
 }

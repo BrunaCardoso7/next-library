@@ -31,6 +31,7 @@ export function useCPFLookup(
       const response = await fetch(`/api/user?cpf=${encodeURIComponent(cpf)}`)
       if (response.ok) {
         const user: UserFound = await response.json()
+        
         if (user) { setData(user) }
         setValue('nm_user', user.nm_user)
         setValue('ie_role', user.ie_role)

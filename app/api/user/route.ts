@@ -55,6 +55,6 @@ export async function POST(req: NextRequest) {
 
   return NextResponse.json({
     message: 'Usuário recebido com sucesso',
-    data: parsed.data,
+    data: onboarding,
   })
 }

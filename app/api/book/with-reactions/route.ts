@@ -4,23 +4,15 @@ import { connectDB } from '@/lib/db'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
-
+  const db = await connectDB()
   const id_onboarding_user = req.nextUrl.searchParams.get('id_onboarding_user')
-
-  const role = req.nextUrl.searchParams.get('role')
-
   const ie_role = req.nextUrl.searchParams.get('ie_role')
-
   const page = parseInt(req.nextUrl.searchParams.get('page') || '1', 10)
-
   const limit = parseInt(req.nextUrl.searchParams.get('limit') || '10', 10)
-
   const skip = (page - 1) * limit
 
-  const db = await connectDB()
 
   const bookRepo = db.getRepository(Book)
-
   const followRepo = db.getRepository(Follow)
 
   const where = ie_role === 'writer' &&
@@ -76,7 +68,6 @@ export async function GET(req: NextRequest) {
   const followMap = new Map(
     userFollows.map(follow => [
       follow.book.id,
-
       follow.is_followup
         ? 'UP'
         : 'DOWN',

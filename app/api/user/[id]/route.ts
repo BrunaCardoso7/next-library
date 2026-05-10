@@ -59,7 +59,6 @@ export async function PUT(req: NextRequest, { params }: Params) {
   }
 
   const updated = repo.merge(user, body)
-
   await repo.save(updated)
 
   return NextResponse.json({

@@ -4,10 +4,10 @@ import { Flame, WavesVertical } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useBookReaction } from '@/features/follow/hooks/useBookReaction'
 import { ReactionType } from '../types/library.types'
+import { useOnboardingContext } from "@/features/onboarding/providers/onboarding-provider"
 
 type BookActionsProps = {
   id_book: number
-  id_onboarding_user: number
   user_reaction?: ReactionType
   nr_followup_count: number
   nr_followdown_count: number
@@ -15,14 +15,14 @@ type BookActionsProps = {
 
 export function BookActions({
   id_book,
-  id_onboarding_user,
   user_reaction,
   nr_followup_count,
   nr_followdown_count,
 }: BookActionsProps) {
+  const {data: user} = useOnboardingContext()
   const { handleReaction, isLoading } = useBookReaction({
     id_book,
-    id_onboarding_user,
+    id_onboarding_user: user?.id ?? 0,
     currentReaction: user_reaction,
   })
 

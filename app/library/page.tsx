@@ -10,21 +10,25 @@ import { useOnboardingContext } from "@/features/onboarding/providers/onboarding
 
 
 export default function LibraryPage() {
-  const { data } = useOnboardingContext()
-  const id_onboarding_user = data?.id ?? 1
+  const [searchTerm, setSearchTerm] = useState('')
+  const { data, hydrated } = useOnboardingContext()
+  const id_onboarding_user = data?.id
   const role = data?.ie_role ?? 'visitor'
 
-  console.log('ID do usuário de onboarding:', id_onboarding_user) 
-  console.log('ID do usuário de onboarding:', data.id) 
-  const [searchTerm, setSearchTerm] = useState('')  
-
-  const { data: allBooksData, isLoading: isLoadingAll, isError: isErrorAll, error: errorAll, hasNextPage, fetchNextPage, isFetchingNextPage } = useBooksQuery({
+  const { data: allBooksData, 
+    isLoading: isLoadingAll, 
+    isError: isErrorAll, 
+    error: errorAll, 
+    hasNextPage, 
+    fetchNextPage, 
+    isFetchingNextPage } =
+  useBooksQuery({
     id_onboarding_user,
     ie_role: role,
+    enabled: hydrated,
   })
 
   const { books: searchResults } = useSearchBooks(searchTerm, id_onboarding_user, role)
-
   const isSearching = searchTerm.trim().length > 0
   const allBooks = isSearching ? searchResults : (allBooksData?.pages?.flatMap((page: any) => page.books) ?? [])
 
@@ -42,7 +46,6 @@ export default function LibraryPage() {
               onLoadMore={isSearching ? undefined : fetchNextPage}
               hasMore={isSearching ? false : (hasNextPage || false)}
               isLoading={isSearching ? false : isFetchingNextPage}
-              id_onboarding_user={id_onboarding_user}
             />
         </div>
     </div>
