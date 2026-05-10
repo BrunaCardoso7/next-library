@@ -80,7 +80,7 @@ Esses dados alimentam:
 ### 📦 Clonar o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/next-library.git
+git clone https://github.com/BrunaCardoso7/next-library.git
 cd next-library
 
 
