@@ -75,6 +75,39 @@ Esses dados alimentam:
 
 ---
 
+## 🚀 Como rodar o projeto
+
+### 📦 Clonar o repositório
+
+```bash
+git clone https://github.com/seu-usuario/next-library.git
+cd next-library
+
+
+### 📥 Instalação das dependências
+```bash
+npm install
+
+### 🐳 Subir o banco de dados (Postgres via Docker)
+```bash
+docker compose -f docker-compose.db.yml up -d
+
+### ⚙️ Rodar migrations (caso necessário)
+```bash
+npm run migration:run
+
+### 🌐 Rodar a aplicação
+```bash 
+npm run dev
+
+A aplicação estará disponível em:
+```bash 
+http://localhost:3000
+
+### 🧪 Como rodar os testes
+```bash 
+npm run test
+
 ## 🧱 Arquitetura do projeto
 
 O projeto segue uma arquitetura **feature-based**, com foco em escalabilidade e separação de responsabilidades.
